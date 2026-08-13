@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bihari Bangers Radio</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      height:100vh;
+      overflow:hidden;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#0f172a;
+      color:#fff;
+      position:relative;
+    }
+
+    .bg{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at top,#4f46e5 0%,transparent 45%),
+        radial-gradient(circle at bottom,#f97316 0%,transparent 45%),
+        linear-gradient(135deg,#0f172a,#1e293b,#111827);
+      filter:blur(40px);
+      transform:scale(1.2);
+      animation:move 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes move{
+      from{transform:scale(1.15) translate(-20px,-10px);}
+      to{transform:scale(1.25) translate(20px,10px);}
+    }
+
+    .player{
+      position:relative;
+      width:380px;
+      max-width:92%;
+      padding:30px;
+      border-radius:28px;
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(18px);
+      border:1px solid rgba(255,255,255,.15);
+      box-shadow:0 20px 50px rgba(0,0,0,.45);
+      text-align:center;
+    }
+
+    .logo{
+      width:110px;
+      height:110px;
+      margin:0 auto 18px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#f97316,#facc15);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:42px;
+      box-shadow:0 10px 30px rgba(249,115,22,.4);
+    }
+
+    h1{
+      font-size:28px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .sub{
+      color:rgba(255,255,255,.72);
+      margin-bottom:24px;
+      font-size:14px;
+    }
+
+    .track{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.1);
+      padding:16px;
+      border-radius:18px;
+      margin-bottom:20px;
+      text-align:left;
+    }
+
+    .track-title{
+      font-weight:600;
+      font-size:16px;
+      margin-bottom:6px;
+    }
+
+    .track-artist{
+      color:rgba(255,255,255,.7);
+      font-size:13px;
+    }
+
+    .progress{
+      width:100%;
+      height:6px;
+      background:rgba(255,255,255,.18);
+      border-radius:999px;
+      overflow:hidden;
+      margin:18px 0 8px;
+    }
+
+    .progress-bar{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,#f97316,#facc15);
+      border-radius:999px;
+    }
+
+    .time{
+      display:flex;
+      justify-content:space-between;
+      font-size:12px;
+      color:rgba(255,255,255,.7);
+      margin-bottom:18px;
+    }
+
+    .controls{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:18px;
+      margin-bottom:20px;
+    }
+
+    .btn{
+      width:54px;
+      height:54px;
+      border:none;
+      border-radius:50%;
+      background:rgba(255,255,255,.12);
+      color:white;
+      font-size:20px;
+      cursor:pointer;
+      transition:.25s;
+      backdrop-filter:blur(10px);
+    }
+
+    .btn:hover{
+      transform:scale(1.08);
+      background:rgba(255,255,255,.18);
+    }
+
+    .play{
+      width:70px;
+      height:70px;
+      font-size:28px;
+      background:linear-gradient(135deg,#f97316,#facc15);
+      color:#111827;
+      box-shadow:0 10px 24px rgba(249,115,22,.35);
+    }
+
+    .playlist{
+      text-align:left;
+      margin-top:10px;
+    }
+
+    .playlist h3{
+      margin-bottom:12px;
+      font-size:15px;
+      color:rgba(255,255,255,.85);
+    }
+
+    .song{
+      padding:12px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      transition:.2s;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.06);
+      margin-bottom:8px;
+    }
+
+    .song:hover{
+      background:rgba(255,255,255,.1);
+    }
+
+    .song.active{
+      background:rgba(249,115,22,.22);
+      border-color:rgba(249,115,22,.35);
+    }
+
+    .footer{
+      margin-top:16px;
+      font-size:12px;
+      color:rgba(255,255,255,.6);
+      text-align:center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg"></div>
+
+  <div class="player">
+    <div class="logo">🎵</div>
+
+    <h1>Bihari Bangers</h1>
+    <div class="sub">Nostalgic Bhojpuri Radio</div>
+
+    <div class="track">
+      <div class="track-title" id="title">Loading...</div>
+      <div class="track-artist">Your Personal Playlist</div>
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar" id="bar"></div>
+    </div>
+
+    <div class="time">
+      <span id="current">0:00</span>
+      <span id="duration">0:00</span>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="prev">⏮</button>
+      <button class="btn play" id="play">▶</button>
+      <button class="btn" id="next">⏭</button>
+    </div>
+
+    <div class="playlist">
+      <h3>Playlist</h3>
+      <div id="playlist"></div>
+    </div>
+
+    <div class="footer">Made for your personal use ❤️</div>
+  </div>
+
+  <audio id="audio"></audio>
+
+  <script>
+    const songs = [
+      { title: "Nostalgia Track 1", file: "songs/song1.mp3" },
+      { title: "Maar Dala", file: "songs/song2.mp3" },
+      { title: "Nostalgia Track 3", file: "songs/song3.mp3" }
+    ];
+
+    const audio = document.getElementById('audio');
+    const title = document.getElementById('title');
+    const playBtn = document.getElementById('play');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const bar = document.getElementById('bar');
+    const current = document.getElementById('current');
+    const duration = document.getElementById('duration');
+    const playlist = document.getElementById('playlist');
+
+    let index = 0;
+
+    function formatTime(sec){
+      if(isNaN(sec)) return "0:00";
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60).toString().padStart(2,'0');
+      return `${m}:${s}`;
+    }
+
+    function renderPlaylist(){
+      playlist.innerHTML = '';
+      songs.forEach((song,i)=>{
+        const div = document.createElement('div');
+        div.className = 'song' + (i===index ? ' active' : '');
+        div.innerHTML = `<span>${song.title}</span><span>♪</span>`;
+        div.onclick = ()=>{
+          index = i;
+          loadSong();
+          audio.play();
+        };
+        playlist.appendChild(div);
+      });
+    }
+
+    function loadSong(){
+      audio.src = songs[index].file;
+      title.textContent = songs[index].title;
+      renderPlaylist();
+    }
+
+    playBtn.onclick = ()=>{
+      if(audio.paused){
+        audio.play();
+      }else{
+        audio.pause();
+      }
+    };
+
+    audio.onplay = ()=> playBtn.textContent = '⏸';
+    audio.onpause = ()=> playBtn.textContent = '▶';
+
+    nextBtn.onclick = ()=>{
+      index = (index + 1) % songs.length;
+      loadSong();
+      audio.play();
+    };
+
+    prevBtn.onclick = ()=>{
+      index = (index - 1 + songs.length) % songs.length;
+      loadSong();
+      audio.play();
+    };
+
+    audio.ontimeupdate = ()=>{
+      const percent = (audio.currentTime / audio.duration) * 100;
+      bar.style.width = percent + '%';
+      current.textContent = formatTime(audio.currentTime);
+      duration.textContent = formatTime(audio.duration);
+    };
+
+    audio.onended = ()=> nextBtn.onclick();
+
+    document.querySelector('.progress').onclick = (e)=>{
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const percent = x / rect.width;
+      audio.currentTime = percent * audio.duration;
+    };
+
+    loadSong();
+  </script>
+
+</body>
+</html>
