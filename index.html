@@ -50,6 +50,34 @@
       backdrop-filter:blur(6px);
     }
 
+    /* Spotify button */
+    .spotify-btn{
+      position:fixed;
+      top:24px;
+      right:84px; /* Left of the playlist button */
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      background:#1DB954;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      box-shadow:0 6px 18px rgba(0,0,0,.35);
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+
+    .spotify-btn:hover{
+      transform:scale(1.08);
+      box-shadow:0 10px 24px rgba(0,0,0,.45);
+    }
+
+    .spotify-btn svg{
+      width:24px;
+      height:24px;
+      fill:white;
+    }
+
     /* Playlist panel */
     .playlist-panel{
       position:fixed;
@@ -135,6 +163,15 @@
   <div class="bg"></div>
 
   <div class="player">
+
+    <a class="spotify-btn"
+       href="https://open.spotify.com"
+       target="_blank"
+       aria-label="Open Spotify">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.508 17.314a.748.748 0 0 1-1.03.246c-2.82-1.724-6.37-2.114-10.55-1.16a.75.75 0 0 1-.333-1.463c4.576-1.044 8.507-.598 11.665 1.333a.75.75 0 0 1 .248 1.044zm1.47-3.27a.936.936 0 0 1-1.287.307c-3.228-1.985-8.149-2.56-11.968-1.399a.938.938 0 0 1-.546-1.794c4.273-1.301 9.591-.668 13.496 1.734a.938.938 0 0 1 .305 1.152zm.126-3.405C16.53 8.516 10.63 8.32 6.23 9.454a1.125 1.125 0 1 1-.56-2.179c5.05-1.297 11.65-1.048 15.611 1.317a1.125 1.125 0 1 1-1.177 1.947z"/>
+      </svg>
+    </a>
 
     <button class="playlist-toggle" id="playlistToggle">☰</button>
 
